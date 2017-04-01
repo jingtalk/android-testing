@@ -93,12 +93,8 @@ public class LongListActivityTest {
      * Check that the item is created. onData() takes care of scrolling.
      */
     @Test
-    public void list_Scrolls() throws Exception {
-
-//        onRow(LAST_ITEM_ID).check(matches(isCompletelyDisplayed()));
-        DataInteraction dataInteraction = onRow(LAST_ITEM_ID);
-        sleep(2000);
-        dataInteraction.check(matches(isCompletelyDisplayed()));
+    public void list_Scrolls() {
+        onRow(LAST_ITEM_ID).check(matches(isCompletelyDisplayed()));
     }
 
     /**
@@ -152,8 +148,15 @@ public class LongListActivityTest {
      * @param str the content of the field
      * @return a {@link DataInteraction} referencing the row
      */
-    private static DataInteraction onRow(String str) {
+    private static DataInteraction onRow(String str){
         // 滑动到value=str指定的item中
-        return onData(hasEntry(equalTo(LongListActivity.ROW_TEXT), is(str)));
+        DataInteraction dataInteraction = onData(hasEntry(equalTo(LongListActivity.ROW_TEXT), is(str)));
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return dataInteraction;
+//        return onData(hasEntry(equalTo(LongListActivity.ROW_TEXT), is(str)));
     }
 }
