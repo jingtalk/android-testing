@@ -39,6 +39,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static java.lang.Thread.sleep;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.is;
@@ -92,8 +93,12 @@ public class LongListActivityTest {
      * Check that the item is created. onData() takes care of scrolling.
      */
     @Test
-    public void list_Scrolls() {
-        onRow(LAST_ITEM_ID).check(matches(isCompletelyDisplayed()));
+    public void list_Scrolls() throws Exception {
+
+//        onRow(LAST_ITEM_ID).check(matches(isCompletelyDisplayed()));
+        DataInteraction dataInteraction = onRow(LAST_ITEM_ID);
+        sleep(2000);
+        dataInteraction.check(matches(isCompletelyDisplayed()));
     }
 
     /**
@@ -148,6 +153,7 @@ public class LongListActivityTest {
      * @return a {@link DataInteraction} referencing the row
      */
     private static DataInteraction onRow(String str) {
+        // 滑动到value=str指定的item中
         return onData(hasEntry(equalTo(LongListActivity.ROW_TEXT), is(str)));
     }
 }

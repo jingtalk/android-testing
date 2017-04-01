@@ -29,6 +29,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.webkit.WebView;
 
 import static android.support.test.espresso.web.assertion.WebViewAssertions.webMatches;
@@ -49,6 +50,7 @@ import static org.hamcrest.Matchers.containsString;
 @RunWith(AndroidJUnit4.class)
 public class WebViewActivityTest {
 
+    private static final String TAG = "WebViewActivityTest";
     private static final String MACCHIATO = "Macchiato";
     private static final String DOPPIO = "Doppio";
 
@@ -78,6 +80,7 @@ public class WebViewActivityTest {
     @Test
     public void typeTextInInput_clickButton_SubmitsForm() {
         // Lazily launch the Activity with a custom start Intent per test
+        Log.d(TAG, "typeTextInInput_clickButton_SubmitsForm test begin.");
         mActivityRule.launchActivity(withWebFormIntent());
 
         // Selects the WebView in your layout. If you have multiple WebViews you can also use a
@@ -97,11 +100,14 @@ public class WebViewActivityTest {
                 .withElement(findElement(Locator.ID, "response"))
                 // Verify that the response page contains the entered text
                 .check(webMatches(getText(), containsString(MACCHIATO)));
+
+        Log.d(TAG, "typeTextInInput_clickButton_SubmitsForm test end.");
     }
 
     @Test
     public void typeTextInInput_clickButton_ChangesText() {
         // Lazily launch the Activity with a custom start Intent per test
+        Log.d(TAG, "typeTextInInput_clickButton_ChangesText test start.");
         mActivityRule.launchActivity(withWebFormIntent());
 
         // Selects the WebView in your layout. If you have multiple WebViews you can also use a
@@ -121,6 +127,8 @@ public class WebViewActivityTest {
                 .withElement(findElement(Locator.ID, "message"))
                 // Verify that the text is displayed
                 .check(webMatches(getText(), containsString(DOPPIO)));
+
+        Log.d(TAG, "typeTextInInput_clickButton_ChangesText test end.");
     }
 
     /**
